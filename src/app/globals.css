@@ -143,6 +143,18 @@ body {
   max-width: 36rem;
 }
 
+@media (max-width: 639px) {
+  .hero-headline {
+    font-size: clamp(2.05rem, 9.2vw, 2.6rem);
+    line-height: 1.12;
+    letter-spacing: -0.025em;
+  }
+
+  .hero-bubbles .bubble {
+    opacity: 0.5 !important;
+  }
+}
+
 /* Soft warm atmospheric wash */
 .bg-warm-wash {
   background:

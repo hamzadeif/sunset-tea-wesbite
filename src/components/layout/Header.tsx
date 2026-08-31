@@ -60,7 +60,7 @@ export function Header() {
               priority
               className="h-10 w-10 shrink-0 object-contain transition-transform duration-300 group-hover:scale-[1.03] sm:h-12 sm:w-12"
             />
-            <span className="truncate font-display text-base tracking-tight text-charcoal sm:text-xl">
+            <span className="hidden truncate font-display text-base tracking-tight text-charcoal sm:inline sm:text-xl">
               Sunset Tea
             </span>
           </Link>
@@ -104,13 +104,6 @@ export function Header() {
           </div>
 
           <div className="flex shrink-0 items-center gap-2 lg:hidden">
-            {SITE.social.instagram ? (
-              <InstagramLink
-                href={SITE.social.instagram}
-                label={`Follow Sunset Tea on Instagram @${SITE.social.instagramHandle}`}
-                className={showBar ? "" : "border-white/40 bg-white/40 backdrop-blur-sm"}
-              />
-            ) : null}
             <button
               type="button"
               className={`inline-flex h-11 w-11 items-center justify-center rounded-full border text-charcoal transition-colors ${
@@ -146,7 +139,7 @@ export function Header() {
         </div>
       </header>
 
-      {/* Full-screen mobile menu */}
+      {/* Mobile menu — panel sits below fixed header so content isn't clipped */}
       <div
         id="mobile-nav"
         className={`fixed inset-0 z-40 lg:hidden ${
@@ -163,23 +156,12 @@ export function Header() {
           onClick={() => setOpen(false)}
         />
         <div
-          className={`safe-top absolute inset-x-0 top-0 flex max-h-[100dvh] flex-col bg-cream/98 shadow-xl backdrop-blur-xl transition-transform duration-300 ease-out ${
-            open ? "translate-y-0" : "-translate-y-full"
+          className={`absolute inset-x-0 top-[var(--header-h)] max-h-[calc(100dvh-var(--header-h))] overflow-y-auto border-b border-border bg-cream/98 shadow-xl backdrop-blur-xl transition-[transform,opacity] duration-300 ease-out ${
+            open ? "translate-y-0 opacity-100" : "-translate-y-3 opacity-0"
           }`}
         >
-          <div className="container-page flex h-[var(--header-h)] items-center justify-between">
-            <span className="font-display text-lg text-charcoal">Menu</span>
-            <button
-              type="button"
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border bg-white/80 text-charcoal"
-              aria-label="Close menu"
-              onClick={() => setOpen(false)}
-            >
-              ✕
-            </button>
-          </div>
           <nav
-            className="container-page safe-bottom flex-1 overflow-y-auto pb-8 pt-2"
+            className="container-page py-3 pb-[max(1.5rem,env(safe-area-inset-bottom,0px))]"
             aria-label="Mobile"
           >
             <ul className="flex flex-col gap-1">
@@ -207,7 +189,7 @@ export function Header() {
               href="/inquiries"
               variant="soft"
               size="lg"
-              className="mt-6 w-full"
+              className="mt-5 w-full"
               onClick={() => setOpen(false)}
             >
               Plan Your Event

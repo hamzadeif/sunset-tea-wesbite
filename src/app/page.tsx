@@ -31,21 +31,32 @@ export default function HomePage() {
   return (
     <>
       <BubbleHero
+        home
         eyebrow="Boba · Matcha · Events"
         title={
           <>
-            Made to Sip.
+            Made to <span className="italic">Sip.</span>
             <br />
-            Made to Celebrate.
+            Made to <span className="italic">Celebrate.</span>
           </>
         }
         description="Handcrafted boba and matcha for everyday moments, events, pop-ups, and celebrations."
         actions={
           <>
-            <ButtonLink href="/inquiries" variant="soft" size="lg">
+            <ButtonLink
+              href="/inquiries"
+              variant="soft"
+              size="lg"
+              className="!py-3.5 text-[0.9375rem] shadow-[0_8px_24px_rgba(224,122,61,0.2)] sm:!py-3.5 sm:text-lg"
+            >
               See Price & Book
             </ButtonLink>
-            <ButtonLink href="/catering" variant="secondary" size="lg">
+            <ButtonLink
+              href="/catering"
+              variant="secondary"
+              size="lg"
+              className="!border-orange-accent/15 !bg-white/60 !py-3.5 text-[0.9375rem] backdrop-blur-sm sm:!py-3.5 sm:text-lg"
+            >
               View Packages
             </ButtonLink>
           </>
@@ -59,7 +70,7 @@ export default function HomePage() {
               width={600}
               height={750}
               priority
-              className="aspect-[4/5] w-full rounded-[1.25rem] object-cover shadow-[var(--shadow-soft)] sm:rounded-[2rem]"
+              className="aspect-[4/5] w-full rounded-[1.5rem] object-cover shadow-[var(--shadow-soft)] sm:rounded-[2rem]"
             />
           </div>
         }
