@@ -36,16 +36,8 @@ export function InquiryForm() {
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [appliedPackageParam, setAppliedPackageParam] = useState(packageParam);
   const formRef = useRef<HTMLDivElement>(null);
-
-  if (packageParam !== appliedPackageParam) {
-    setAppliedPackageParam(packageParam);
-    const preselect = parsePackageParam(packageParam);
-    if (preselect) {
-      setState((s) => ({ ...s, packageId: preselect }));
-    }
-  }
+  const submitErrorRef = useRef<HTMLParagraphElement>(null);
 
   const patch = useCallback((partial: Partial<InquiryFormState>) => {
     setState((s) => ({ ...s, ...partial }));
@@ -72,22 +64,27 @@ export function InquiryForm() {
     setErrors({});
   }
 
+  function showSubmitError(message: string) {
+    setSubmitError(message);
+    requestAnimationFrame(() => {
+      submitErrorRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+  }
+
   async function handleSubmit() {
+    setSubmitError(null);
     const nextErrors = validateStep("review", state);
     setErrors(nextErrors);
     if (!canSubmit(state) || Object.keys(nextErrors).length > 0) {
-      setSubmitError(
+      showSubmitError(
         Object.keys(nextErrors).length > 0
           ? "Please fix the items below before booking."
           : "Please complete all required fields.",
       );
-      formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
       return;
     }
-    if (state.honeypot) return;
 
     setIsSubmitting(true);
-    setSubmitError(null);
 
     try {
       const res = await fetch("/api/inquiry", {
@@ -100,21 +97,19 @@ export function InquiryForm() {
       try {
         data = (await res.json()) as { ok?: boolean; error?: string };
       } catch {
-        setSubmitError("Unexpected server response. Please try again or email us directly.");
+        showSubmitError("Unexpected server response. Please try again or email us directly.");
         return;
       }
 
       if (!res.ok || !data.ok) {
-        setSubmitError(data.error ?? "Something went wrong. Please try again.");
-        formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        showSubmitError(data.error ?? "Something went wrong. Please try again.");
         return;
       }
 
       setSubmitted(true);
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch {
-      setSubmitError("Network error. Please check your connection and try again.");
-      formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      showSubmitError("Network error. Please check your connection and try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -179,21 +174,26 @@ export function InquiryForm() {
           ) : null}
         </div>
 
-        {/* Honeypot */}
-        <div className="absolute -left-[9999px] h-0 w-0 overflow-hidden" aria-hidden>
-          <label>
-            Company
-            <input
-              tabIndex={-1}
-              autoComplete="off"
-              value={state.honeypot}
-              onChange={(e) => patch({ honeypot: e.target.value })}
-            />
-          </label>
+        {/* Honeypot — avoid "company"/name labels that trigger browser autofill */}
+        <div className="pointer-events-none absolute -left-[9999px] h-px w-px overflow-hidden opacity-0" aria-hidden>
+          <label htmlFor="st-inquiry-hp">Leave blank</label>
+          <input
+            id="st-inquiry-hp"
+            name="st-inquiry-hp"
+            type="text"
+            tabIndex={-1}
+            autoComplete="off"
+            value={state.honeypot}
+            onChange={(e) => patch({ honeypot: e.target.value })}
+          />
         </div>
 
         {submitError ? (
-          <p className="error-text mt-4 rounded-xl border border-orange-deep/20 bg-peach-50 px-4 py-3">
+          <p
+            ref={submitErrorRef}
+            role="alert"
+            className="error-text mt-4 rounded-xl border border-orange-deep/20 bg-peach-50 px-4 py-3"
+          >
             {submitError}
           </p>
         ) : null}
