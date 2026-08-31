@@ -37,8 +37,12 @@ export default function InquiriesPage() {
               Don&apos;t have every detail figured out yet? That&apos;s completely fine. Tell us
               what you know and we&apos;ll help with the rest.
             </span>
+            <span className="mt-3 block font-medium text-orange-accent">
+              We&apos;ll get back to you within {RESPONSE_TIME_HOURS} hours to confirm everything.
+            </span>
           </>
         }
+        microcopy={`No payment required today · Response within ${RESPONSE_TIME_HOURS} hours`}
       />
 
       <Section className="!pt-4 sm:!pt-6">

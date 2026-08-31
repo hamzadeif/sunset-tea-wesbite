@@ -83,6 +83,11 @@ export function buildInquiryEmail(state: InquiryFormState): {
       }
       ${row("Drinks / Menu", drinkDetails || "—")}
       ${
+        state.additionalNotes.trim()
+          ? row("Additional Notes", escapeHtml(state.additionalNotes.trim()).replace(/\n/g, "<br/>"))
+          : ""
+      }
+      ${
         price
           ? row(price.drinkLine.label, formatCurrency(price.drinkLine.amount)) +
             (price.serviceLine
@@ -128,6 +133,9 @@ export function buildInquiryEmail(state: InquiryFormState): {
   }
 
   textLines.push(`Drinks: ${drinkDetails.replace(/<br\/>/g, "; ")}`);
+  if (state.additionalNotes.trim()) {
+    textLines.push(`Additional Notes: ${state.additionalNotes.trim()}`);
+  }
   if (price) {
     textLines.push(
       price.drinkLine.label,

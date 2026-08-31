@@ -32,6 +32,7 @@ export interface InquiryFormState {
   guestCount: number | "";
   boothDrinkIds: string[];
   letSunsetRecommendMenu: boolean;
+  additionalNotes: string;
   // Meta
   honeypot: string;
 }
@@ -61,5 +62,6 @@ export const INITIAL_INQUIRY_STATE: InquiryFormState = {
   guestCount: "",
   boothDrinkIds: [],
   letSunsetRecommendMenu: false,
+  additionalNotes: "",
   honeypot: "",
 };

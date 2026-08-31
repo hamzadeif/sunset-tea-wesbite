@@ -152,7 +152,7 @@ export function InquiryForm() {
             )
           ) : null}
           {step === "review" ? (
-            <ReviewStep state={state} onEdit={setStep} />
+            <ReviewStep state={state} onEdit={setStep} onChange={patch} />
           ) : null}
         </div>
 
@@ -487,9 +487,11 @@ function DetailsStep({
 function ReviewStep({
   state,
   onEdit,
+  onChange,
 }: {
   state: InquiryFormState;
   onEdit: (step: InquiryStep) => void;
+  onChange: (p: Partial<InquiryFormState>) => void;
 }) {
   const price = calculatePrice(state);
   const pkg = state.packageId ? PACKAGES[state.packageId] : null;
@@ -552,6 +554,23 @@ function ReviewStep({
           ))}
         </ul>
       </ReviewBlock>
+
+      <div className="rounded-[1.25rem] border border-border bg-white/85 p-4 sm:p-5">
+        <label htmlFor="additionalNotes" className="label-field">
+          Anything else we should know?
+        </label>
+        <p className="mb-3 text-sm text-muted">
+          Optional — special requests, venue details, or anything else about your event.
+        </p>
+        <textarea
+          id="additionalNotes"
+          className="input-field min-h-[7rem] resize-y"
+          value={state.additionalNotes}
+          onChange={(e) => onChange({ additionalNotes: e.target.value })}
+          placeholder="Tell us anything else that would help plan your event…"
+          rows={4}
+        />
+      </div>
 
       {price ? (
         <div className="rounded-[1.25rem] bg-peach-50 p-5">

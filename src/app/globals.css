@@ -430,6 +430,12 @@ body {
   box-shadow: 0 0 0 4px rgba(196, 95, 40, 0.12);
 }
 
+textarea.input-field {
+  min-height: 6.5rem;
+  resize: vertical;
+  line-height: 1.55;
+}
+
 .label-field {
   display: block;
   font-size: 0.9rem;
