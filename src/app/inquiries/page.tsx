@@ -7,11 +7,11 @@ import { Container, Section } from "@/components/ui/Container";
 import { RESPONSE_TIME_HOURS } from "@/lib/config/business";
 
 export const metadata: Metadata = {
-  title: "Inquiries + FAQ",
-  description: `Request a Sunset Tea catering quote. Tell us about your event — we'll get back to you within ${RESPONSE_TIME_HOURS} hours.`,
+  title: "Plan Your Event",
+  description: `Plan your Sunset Tea catering — choose a service, customize drinks, and see your price instantly. We'll confirm within ${RESPONSE_TIME_HOURS} hours. No payment required today.`,
   openGraph: {
-    title: "Request a Quote | Sunset Tea",
-    description: `Easy catering inquiries for Drop-Off or Full Booth Service. Response within ${RESPONSE_TIME_HOURS} hours.`,
+    title: "Plan Your Event | Sunset Tea",
+    description: `See your price instantly for Drop-Off or Full Booth Service. Book when you're ready — we confirm within ${RESPONSE_TIME_HOURS} hours.`,
   },
 };
 
@@ -21,12 +21,17 @@ export default function InquiriesPage() {
       <BubbleHero
         compact
         density="light"
-        eyebrow="Catering inquiry"
-        title="Request a Quote"
+        eyebrow="Event planner"
+        title="Plan Your Event"
         description={
           <>
-            Tell us about your event and we&apos;ll get back to you as soon as possible — always
-            within {RESPONSE_TIME_HOURS} hours.
+            <span className="block font-medium text-ink">
+              See your price instantly. Book when you&apos;re ready.
+            </span>
+            <span className="mt-3 block">
+              Choose your service, tell us about your event, and customize your drinks. You&apos;ll
+              see your price before you book — no waiting around for a quote.
+            </span>
             <span className="mt-3 block">
               Don&apos;t have every detail figured out yet? That&apos;s completely fine. Tell us
               what you know and we&apos;ll help with the rest.
@@ -40,7 +45,7 @@ export default function InquiriesPage() {
           <Suspense
             fallback={
               <div className="rounded-[2rem] border border-border bg-white/80 p-10 text-muted">
-                Loading form…
+                Loading planner…
               </div>
             }
           >

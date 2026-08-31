@@ -17,11 +17,11 @@ import { PriceSummary } from "./PriceSummary";
 import { BoothMenuSelector, DrinkSelector } from "./DrinkSelector";
 
 const STEPS: { id: InquiryStep; label: string }[] = [
-  { id: "general", label: "Info" },
-  { id: "package", label: "Package" },
+  { id: "general", label: "Your Event" },
+  { id: "package", label: "Service" },
   { id: "details", label: "Details" },
   { id: "drinks", label: "Drinks" },
-  { id: "review", label: "Review" },
+  { id: "review", label: "Your Price" },
 ];
 
 export function InquiryForm() {
@@ -98,20 +98,36 @@ export function InquiryForm() {
   }
 
   if (submitted) {
+    const price = calculatePrice(state);
     return (
       <div className="rounded-[1.25rem] border border-border bg-white/85 p-6 text-center shadow-[var(--shadow-soft)] sm:rounded-[2rem] sm:p-12">
-        <p className="eyebrow">Inquiry received</p>
-        <h2 className="display-md mt-3">You&apos;re all set.</h2>
+        <p className="eyebrow">Event request received</p>
+        <h2 className="display-md mt-3">We&apos;ve got it.</h2>
         <p className="lead mx-auto mt-4">
-          Thanks for reaching out to Sunset Tea. We&apos;ll review your event and get back to you
-          as soon as possible — always within {RESPONSE_TIME_HOURS} hours.
+          Thanks for choosing Sunset Tea. We&apos;ve received your event details and will be in
+          touch within {RESPONSE_TIME_HOURS} hours to confirm everything.
         </p>
+        {price ? (
+          <p className="mt-5 font-display text-2xl text-charcoal">
+            {price.isEstimate ? "Your estimated price" : "Your price"}:{" "}
+            {formatCurrency(price.total)}
+          </p>
+        ) : null}
         <p className="mt-4 text-sm text-muted">
-          Submitting an inquiry starts the conversation — it doesn&apos;t book your event yet.
+          No payment was required today — we&apos;ll confirm your event details together.
         </p>
       </div>
     );
   }
+
+  const reviewPrice = calculatePrice(state);
+  const bookLabel = (() => {
+    if (!reviewPrice) return "Book My Event";
+    if (reviewPrice.isEstimate) {
+      return `Book My Event — Est. ${formatCurrency(reviewPrice.total)}`;
+    }
+    return `Book My Event — ${formatCurrency(reviewPrice.total)}`;
+  })();
 
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_300px] lg:gap-8">
@@ -170,16 +186,22 @@ export function InquiryForm() {
               Continue
             </Button>
           ) : (
-            <Button
-              type="button"
-              variant="soft"
-              size="lg"
-              onClick={handleSubmit}
-              disabled={isPending}
-              className="w-full sm:w-auto"
-            >
-              {isPending ? "Sending…" : "Submit Inquiry"}
-            </Button>
+            <div className="flex w-full flex-col gap-2 sm:w-auto sm:items-end">
+              <Button
+                type="button"
+                variant="soft"
+                size="lg"
+                onClick={handleSubmit}
+                disabled={isPending}
+                className="w-full whitespace-normal text-center sm:w-auto sm:min-w-[16rem]"
+              >
+                {isPending ? "Sending…" : bookLabel}
+              </Button>
+              <p className="text-center text-xs text-muted sm:text-right">
+                No payment required today. We&apos;ll confirm your event details within{" "}
+                {RESPONSE_TIME_HOURS} hours.
+              </p>
+            </div>
           )}
         </div>
       </div>
@@ -256,7 +278,7 @@ function GeneralStep({
   return (
     <div className="space-y-5">
       <div>
-        <h2 className="font-display text-2xl text-charcoal sm:text-3xl">General information</h2>
+        <h2 className="font-display text-2xl text-charcoal sm:text-3xl">Your event</h2>
         <p className="mt-2 text-muted">Don&apos;t have every detail yet? That&apos;s completely fine.</p>
       </div>
       <Field label="Name" id="name" error={errors.name}>
@@ -320,7 +342,7 @@ function PackageStep({
     <div className="space-y-5">
       <div>
         <h2 className="font-display text-2xl text-charcoal sm:text-3xl">
-          How would you like Sunset Tea at your event?
+          Choose your service
         </h2>
       </div>
       <div className="grid gap-4">
@@ -489,9 +511,9 @@ function ReviewStep({
   return (
     <div className="space-y-5">
       <div>
-        <h2 className="font-display text-2xl text-charcoal sm:text-3xl">Review your inquiry</h2>
+        <h2 className="font-display text-2xl text-charcoal sm:text-3xl">Your price</h2>
         <p className="mt-2 text-muted">
-          Looks good? Submit and we&apos;ll follow up within {RESPONSE_TIME_HOURS} hours.
+          Review everything below, then book when you&apos;re ready — no payment required today.
         </p>
       </div>
 
@@ -502,7 +524,7 @@ function ReviewStep({
         <p>Event date: {state.eventDate}</p>
       </ReviewBlock>
 
-      <ReviewBlock title="Package" onEdit={() => onEdit("package")}>
+      <ReviewBlock title="Service" onEdit={() => onEdit("package")}>
         <p>{pkg?.name}</p>
       </ReviewBlock>
 
@@ -534,9 +556,16 @@ function ReviewStep({
       {price ? (
         <div className="rounded-[1.25rem] bg-peach-50 p-5">
           <p className="text-sm font-semibold text-muted">
-            {price.isEstimate ? "Estimated total" : "Total"}
+            {price.isEstimate ? "Your estimated price" : "Your price"}
           </p>
           <p className="font-display text-3xl text-charcoal">{formatCurrency(price.total)}</p>
+          {!price.isEstimate ? (
+            <p className="mt-2 text-xs text-muted">That&apos;s your price. No waiting for a quote.</p>
+          ) : (
+            <p className="mt-2 text-xs text-muted">
+              Based on approximate guest count — we&apos;ll confirm final details together.
+            </p>
+          )}
         </div>
       ) : null}
     </div>

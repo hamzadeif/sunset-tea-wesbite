@@ -11,8 +11,8 @@ export function FAQAccordion() {
           <Eyebrow>FAQ</Eyebrow>
           <h2 className="display-lg mt-3">Frequently asked</h2>
           <p className="lead mx-auto mt-4">
-            Quick answers about catering, pricing, and how easy it is to work with Sunset Tea.
-            We respond within {RESPONSE_TIME_HOURS} hours.
+            Quick answers about catering, instant pricing, and how easy it is to plan with Sunset
+            Tea. We respond within {RESPONSE_TIME_HOURS} hours.
           </p>
         </div>
         <div className="mx-auto mt-12 max-w-3xl">

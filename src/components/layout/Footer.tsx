@@ -42,7 +42,7 @@ export function Footer() {
                 href="/inquiries"
                 className="font-semibold text-orange-accent transition-colors hover:text-orange-deep"
               >
-                Get a Quote
+                Plan Your Event
               </Link>
             </li>
           </ul>

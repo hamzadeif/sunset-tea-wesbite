@@ -10,11 +10,11 @@ import { PACKAGE_LIST } from "@/lib/config/packages";
 export const metadata: Metadata = {
   title: "Catering",
   description:
-    "Sunset Tea catering for events — Drop-Off at $5/drink or Full Booth Service with on-site staff. Toppings included. No minimum order.",
+    "Sunset Tea catering for events — Drop-Off at $5/drink or Full Booth Service with on-site staff. Toppings included. See your price instantly and book when you're ready.",
   openGraph: {
     title: "Sunset Tea Catering",
     description:
-      "Drop-Off or Full Booth Service. $5 per drink with topping included. Flexible, simple, and fun.",
+      "Drop-Off or Full Booth Service. $5 per drink with topping included. See your price instantly — no waiting for a quote.",
   },
 };
 
@@ -28,9 +28,10 @@ export default function CateringPage() {
         description="Whether you want ready-to-serve drinks dropped off or a full Sunset Tea booth making drinks fresh for your guests, we keep catering simple, flexible, and fun."
         actions={
           <ButtonLink href="/inquiries" variant="soft" size="lg">
-            Get a Quote
+            See Price & Book
           </ButtonLink>
         }
+        microcopy="See your price instantly. No waiting for a quote."
       />
 
       <Section>
@@ -39,7 +40,8 @@ export default function CateringPage() {
             <Eyebrow>Packages</Eyebrow>
             <h2 className="display-lg mt-3">Pick the experience that fits.</h2>
             <p className="lead mx-auto mt-4">
-              Two clear options. Transparent pricing. Toppings always included.
+              Two clear options. Transparent pricing. See exactly what your event costs before you
+              book.
             </p>
           </div>
           <div className="mt-12 grid gap-6 lg:grid-cols-2 lg:gap-8">
@@ -53,10 +55,10 @@ export default function CateringPage() {
       <MenuSection />
 
       <CTASection
-        eyebrow="Planning something?"
-        title="Tell us what you have in mind."
-        description="We'll take it from there — and reply within 24 hours."
-        ctaLabel="Start Your Inquiry"
+        eyebrow="No waiting around"
+        title="Ready to plan your event?"
+        description="Choose your service, customize your drinks, and see your price instantly."
+        ctaLabel="See Price & Book"
         ctaHref="/inquiries"
       />
     </>

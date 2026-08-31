@@ -13,9 +13,9 @@ export const FAQ_ITEMS: FAQItem[] = [
   },
   {
     id: "cost",
-    question: "How much does catering cost?",
+    question: "How do I know how much my event will cost?",
     answer:
-      "Drop-Off is $5 per drink. Full Booth is $5 per drink plus a $300 service fee. Toppings are included either way — no extra charge.",
+      "Our pricing is simple, so you don't have to wait for a custom quote. Drop-Off Catering is $5 per drink, and Full Booth Service is $5 per drink plus a $300 service fee. Use our event planner to customize your order and see your price instantly before you book.",
   },
   {
     id: "dropoff-includes",
@@ -57,7 +57,13 @@ export const FAQ_ITEMS: FAQItem[] = [
     id: "special",
     question: "Can you accommodate special requests?",
     answer:
-      "We try to stay flexible. Tell us what you have in mind in your inquiry and we'll let you know what we can do.",
+      "We try to stay flexible. Tell us what you have in mind when you plan your event and we'll let you know what we can do.",
+  },
+  {
+    id: "payment",
+    question: "Do I have to pay when I book?",
+    answer:
+      "No payment is required when you submit your event request. We'll receive your event details, follow up within 24 hours, and confirm everything with you.",
   },
   {
     id: "response",
@@ -66,14 +72,14 @@ export const FAQ_ITEMS: FAQItem[] = [
   },
   {
     id: "advance",
-    question: "How far in advance should I inquire?",
+    question: "How far in advance should I plan?",
     answer:
       "Earlier is better for date availability, but you're always welcome to reach out on shorter notice. We'll confirm what we can make work.",
   },
   {
     id: "booked",
-    question: "Is my event booked when I submit the inquiry?",
+    question: "Is my event booked when I submit?",
     answer:
-      "No. Submitting the inquiry starts the conversation. We'll confirm availability and event details with you afterward.",
+      "Submitting your event request lets us know you're ready to move forward. You'll already know your price, and we'll reach out within 24 hours to confirm the event details with you.",
   },
 ];

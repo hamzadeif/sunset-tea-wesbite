@@ -24,7 +24,7 @@ export function calculatePrice(state: InquiryFormState): PriceBreakdown | null {
     return {
       packageId: "dropoff",
       drinkLine: {
-        label: `Drinks — ${cups} × $${DROP_OFF_PRICE_PER_DRINK}`,
+        label: `${cups} drinks × $${DROP_OFF_PRICE_PER_DRINK}`,
         amount: cups * DROP_OFF_PRICE_PER_DRINK,
       },
       included,
@@ -39,7 +39,7 @@ export function calculatePrice(state: InquiryFormState): PriceBreakdown | null {
   return {
     packageId: "booth",
     drinkLine: {
-      label: `Estimated Drinks — ${guests} × $${BOOTH_PRICE_PER_DRINK}`,
+      label: `${guests} guests × $${BOOTH_PRICE_PER_DRINK}`,
       amount: guests * BOOTH_PRICE_PER_DRINK,
     },
     serviceLine: {

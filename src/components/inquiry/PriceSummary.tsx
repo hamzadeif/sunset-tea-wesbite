@@ -25,7 +25,7 @@ export function PriceSummary({
       } ${className}`}
       aria-live="polite"
     >
-      <p className="eyebrow">Summary</p>
+      <p className="eyebrow">{price.isEstimate ? "Your Estimated Price" : "Your Price"}</p>
       <h3 className="mt-2 font-display text-lg text-charcoal sm:text-xl">{pkg.name}</h3>
 
       <dl className="mt-4 space-y-2.5 text-sm">
@@ -61,9 +61,11 @@ export function PriceSummary({
       </div>
       {price.isEstimate ? (
         <p className="mt-2 text-xs text-muted">
-          Based on approximate guest count — final details confirmed together.
+          Based on your approximate guest count — we&apos;ll confirm final details together.
         </p>
-      ) : null}
+      ) : (
+        <p className="mt-2 text-xs text-muted">That&apos;s your price. No waiting for a quote.</p>
+      )}
     </aside>
   );
 }

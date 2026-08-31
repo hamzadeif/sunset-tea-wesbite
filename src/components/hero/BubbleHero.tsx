@@ -10,6 +10,8 @@ interface BubbleHeroProps {
   aside?: ReactNode;
   density?: "full" | "light";
   compact?: boolean;
+  /** Subtle secondary line under CTAs (e.g. pricing reassurance). */
+  microcopy?: ReactNode;
 }
 
 export function BubbleHero({
@@ -20,6 +22,7 @@ export function BubbleHero({
   aside,
   density = "full",
   compact = false,
+  microcopy,
 }: BubbleHeroProps) {
   const contentPad = compact
     ? "pb-12 pt-[calc(var(--header-h)+1.75rem)] sm:pb-20 sm:pt-[calc(var(--header-h)+3rem)]"
@@ -49,10 +52,13 @@ export function BubbleHero({
                 {actions}
               </div>
             ) : null}
+            {microcopy ? (
+              <p className="mt-4 text-sm text-muted sm:mt-5">{microcopy}</p>
+            ) : null}
           </div>
           {aside ? (
             <div
-              className="motion-safe-fade relative mx-auto w-full max-w-[19rem] sm:max-w-[21rem] lg:max-w-[23rem] lg:ml-auto xl:max-w-[24rem]"
+              className="motion-safe-fade relative mx-auto w-full max-w-[19rem] sm:max-w-[21rem] lg:ml-auto lg:max-w-[23rem] xl:max-w-[24rem]"
               style={{ animationDelay: "120ms" }}
             >
               {aside}

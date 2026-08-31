@@ -43,13 +43,14 @@ export default function HomePage() {
         actions={
           <>
             <ButtonLink href="/inquiries" variant="soft" size="lg">
-              Get a Quote
+              See Price & Book
             </ButtonLink>
             <ButtonLink href="/catering" variant="secondary" size="lg">
               View Packages
             </ButtonLink>
           </>
         }
+        microcopy="Simple pricing · See your price instantly · No payment required today"
         aside={
           <div className="motion-safe-float">
             <Image
@@ -70,8 +71,8 @@ export default function HomePage() {
             <Eyebrow>Choose your experience</Eyebrow>
             <h2 className="display-lg mt-3">Two ways to bring Sunset Tea</h2>
             <p className="lead mx-auto mt-4">
-              Simple pricing. Flexible quantities. Toppings included. Tell us what you&apos;re
-              planning — we&apos;ll handle the drinks.
+              Simple pricing — see your price instantly. Flexible quantities. Toppings included.
+              Pick your service and book when you&apos;re ready.
             </p>
           </div>
           <div className="mt-12 grid gap-6 lg:grid-cols-2 lg:gap-8">
@@ -157,9 +158,9 @@ export default function HomePage() {
 
       <CTASection
         eyebrow="Ready when you are"
-        title="Tell us what you're planning."
-        description="We'll handle the drinks — and get back to you within 24 hours."
-        ctaLabel="Get a Quote"
+        title="See your price. Book when you're ready."
+        description="Choose your service, customize your drinks, and see exactly what your event costs — no waiting around for a quote."
+        ctaLabel="See Price & Book"
         ctaHref="/inquiries"
       />
     </>

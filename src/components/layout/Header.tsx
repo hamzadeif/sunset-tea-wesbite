@@ -99,7 +99,7 @@ export function Header() {
             ) : null}
 
             <ButtonLink href="/inquiries" variant="soft" size="md" className="ml-2">
-              Get a Quote
+              Plan Your Event
             </ButtonLink>
           </div>
 
@@ -210,7 +210,7 @@ export function Header() {
               className="mt-6 w-full"
               onClick={() => setOpen(false)}
             >
-              Get a Quote
+              Plan Your Event
             </ButtonLink>
           </nav>
         </div>
