@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState, useTransition } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { PACKAGES } from "@/lib/config/packages";
 import { RESPONSE_TIME_HOURS } from "@/lib/config/business";
@@ -35,8 +35,9 @@ export function InquiryForm() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  const [isPending, startTransition] = useTransition();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [appliedPackageParam, setAppliedPackageParam] = useState(packageParam);
+  const formRef = useRef<HTMLDivElement>(null);
 
   if (packageParam !== appliedPackageParam) {
     setAppliedPackageParam(packageParam);
@@ -71,30 +72,52 @@ export function InquiryForm() {
     setErrors({});
   }
 
-  function handleSubmit() {
+  async function handleSubmit() {
     const nextErrors = validateStep("review", state);
     setErrors(nextErrors);
-    if (!canSubmit(state) || Object.keys(nextErrors).length > 0) return;
+    if (!canSubmit(state) || Object.keys(nextErrors).length > 0) {
+      setSubmitError(
+        Object.keys(nextErrors).length > 0
+          ? "Please fix the items below before booking."
+          : "Please complete all required fields.",
+      );
+      formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
     if (state.honeypot) return;
 
-    startTransition(async () => {
-      setSubmitError(null);
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      const res = await fetch("/api/inquiry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(state),
+      });
+
+      let data: { ok?: boolean; error?: string } = {};
       try {
-        const res = await fetch("/api/inquiry", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(state),
-        });
-        const data = (await res.json()) as { ok?: boolean; error?: string };
-        if (!res.ok || !data.ok) {
-          setSubmitError(data.error ?? "Something went wrong. Please try again.");
-          return;
-        }
-        setSubmitted(true);
+        data = (await res.json()) as { ok?: boolean; error?: string };
       } catch {
-        setSubmitError("Network error. Please try again.");
+        setSubmitError("Unexpected server response. Please try again or email us directly.");
+        return;
       }
-    });
+
+      if (!res.ok || !data.ok) {
+        setSubmitError(data.error ?? "Something went wrong. Please try again.");
+        formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        return;
+      }
+
+      setSubmitted(true);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch {
+      setSubmitError("Network error. Please check your connection and try again.");
+      formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   if (submitted) {
@@ -130,7 +153,7 @@ export function InquiryForm() {
   })();
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_300px] lg:gap-8">
+    <div ref={formRef} className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_300px] lg:gap-8">
       <div className="relative rounded-[1.25rem] border border-border bg-white/85 p-4 shadow-[var(--shadow-soft)] sm:rounded-[2rem] sm:p-8">
         <Progress steps={STEPS} current={stepIndex} />
 
@@ -152,7 +175,7 @@ export function InquiryForm() {
             )
           ) : null}
           {step === "review" ? (
-            <ReviewStep state={state} onEdit={setStep} onChange={patch} />
+            <ReviewStep state={state} onEdit={setStep} onChange={patch} errors={errors} />
           ) : null}
         </div>
 
@@ -169,14 +192,18 @@ export function InquiryForm() {
           </label>
         </div>
 
-        {submitError ? <p className="error-text mt-4">{submitError}</p> : null}
+        {submitError ? (
+          <p className="error-text mt-4 rounded-xl border border-orange-deep/20 bg-peach-50 px-4 py-3">
+            {submitError}
+          </p>
+        ) : null}
 
         <div className="mt-8 flex flex-col-reverse gap-3 border-t border-border pt-6 sm:flex-row sm:items-center sm:justify-between">
           <Button
             type="button"
             variant="ghost"
             onClick={goBack}
-            disabled={stepIndex === 0 || isPending}
+            disabled={stepIndex === 0 || isSubmitting}
             className="w-full sm:w-auto"
           >
             Back
@@ -192,10 +219,10 @@ export function InquiryForm() {
                 variant="soft"
                 size="lg"
                 onClick={handleSubmit}
-                disabled={isPending}
+                disabled={isSubmitting}
                 className="w-full whitespace-normal text-center sm:w-auto sm:min-w-[16rem]"
               >
-                {isPending ? "Sending…" : bookLabel}
+                {isSubmitting ? "Sending…" : bookLabel}
               </Button>
               <p className="text-center text-xs text-muted sm:text-right">
                 No payment required today. We&apos;ll confirm your event details within{" "}
@@ -488,10 +515,12 @@ function ReviewStep({
   state,
   onEdit,
   onChange,
+  errors,
 }: {
   state: InquiryFormState;
   onEdit: (step: InquiryStep) => void;
   onChange: (p: Partial<InquiryFormState>) => void;
+  errors: Record<string, string>;
 }) {
   const price = calculatePrice(state);
   const pkg = state.packageId ? PACKAGES[state.packageId] : null;
@@ -518,6 +547,20 @@ function ReviewStep({
           Review everything below, then book when you&apos;re ready — no payment required today.
         </p>
       </div>
+
+      {Object.keys(errors).length > 0 ? (
+        <div
+          className="rounded-[1.25rem] border border-orange-deep/25 bg-peach-50 px-4 py-3 text-sm text-orange-deep"
+          role="alert"
+        >
+          <p className="font-semibold">A few things need your attention:</p>
+          <ul className="mt-2 list-inside list-disc space-y-1">
+            {Object.values(errors).map((message) => (
+              <li key={message}>{message}</li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
 
       <ReviewBlock title="Contact" onEdit={() => onEdit("general")}>
         <p>{state.name}</p>
