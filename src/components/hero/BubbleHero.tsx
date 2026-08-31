@@ -67,8 +67,8 @@ export function BubbleHero({
             {actions ? (
               <div
                 className={`mt-7 flex flex-col sm:mt-8 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4 ${
-                  home ? "gap-3.5 sm:gap-4" : "gap-3"
-                } [&_a]:w-full sm:[&_a]:w-auto [&_button]:w-full sm:[&_button]:w-auto`}
+                  home ? "items-start gap-3.5 sm:gap-4 [&_a]:w-auto [&_button]:w-auto" : "gap-3 [&_a]:w-full sm:[&_a]:w-auto [&_button]:w-full sm:[&_button]:w-auto"
+                }`}
               >
                 {actions}
               </div>

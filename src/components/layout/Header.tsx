@@ -104,6 +104,13 @@ export function Header() {
           </div>
 
           <div className="flex shrink-0 items-center gap-2 lg:hidden">
+            {SITE.social.instagram ? (
+              <InstagramLink
+                href={SITE.social.instagram}
+                label={`Follow Sunset Tea on Instagram @${SITE.social.instagramHandle}`}
+                className={showBar ? "" : "border-white/40 bg-white/40 backdrop-blur-sm"}
+              />
+            ) : null}
             <button
               type="button"
               className={`inline-flex h-11 w-11 items-center justify-center rounded-full border text-charcoal transition-colors ${

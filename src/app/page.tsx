@@ -47,15 +47,18 @@ export default function HomePage() {
               href="/inquiries"
               variant="soft"
               size="lg"
-              className="!py-3.5 text-[0.9375rem] shadow-[0_8px_24px_rgba(224,122,61,0.2)] sm:!py-3.5 sm:text-lg"
+              className="!px-6 !py-3.5 text-[0.9375rem] shadow-[0_8px_24px_rgba(224,122,61,0.2)] sm:!px-7 sm:!py-3.5 sm:text-lg"
             >
               See Price & Book
+              <span aria-hidden className="ml-0.5">
+                →
+              </span>
             </ButtonLink>
             <ButtonLink
               href="/catering"
               variant="secondary"
               size="lg"
-              className="!border-orange-accent/15 !bg-white/60 !py-3.5 text-[0.9375rem] backdrop-blur-sm sm:!py-3.5 sm:text-lg"
+              className="!border-orange-accent/15 !bg-white/60 !px-6 !py-3.5 text-[0.9375rem] backdrop-blur-sm sm:!px-7 sm:!py-3.5 sm:text-lg"
             >
               View Packages
             </ButtonLink>
