@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { BubbleHero } from "@/components/hero/BubbleHero";
-import { EventGallery } from "@/components/events/EventGallery";
+import { EventsSpotlight } from "@/components/events/EventsSpotlight";
 import { CTASection } from "@/components/cta/CTASection";
 import { Container, Eyebrow, Section } from "@/components/ui/Container";
 
@@ -30,15 +30,14 @@ export default function EventsPage() {
         <Container>
           <div className="mx-auto max-w-2xl text-center">
             <Eyebrow>Moments</Eyebrow>
-            <h2 className="display-lg mt-3">From Cal Poly lawns to community markets.</h2>
+            <h2 className="display-lg mt-3">Out in the community.</h2>
             <p className="lead mx-auto mt-4">
-              From Cal Poly lawns to community markets and special events, we love bringing
-              Sunset Tea directly to people. Add your photos and event details anytime — this
-              gallery is built to grow.
+              A look at Sunset Tea on the ground — booth days, campus pop-ups, and the events
+              we love showing up for.
             </p>
           </div>
           <div className="mt-12">
-            <EventGallery />
+            <EventsSpotlight />
           </div>
         </Container>
       </Section>

@@ -2,6 +2,7 @@
 
 import {
   getCategoryName,
+  MENU_CATEGORIES,
   MENU_DRINKS,
   TOPPINGS,
   type ToppingId,
@@ -109,75 +110,89 @@ export function DrinkSelector({ state, onChange, error }: DrinkSelectorProps) {
             </span>
           </div>
 
-          <div className="space-y-3">
-            {MENU_DRINKS.map((drink) => {
-              const qty = getQty(drink.id);
-              const topping = getTopping(drink.id);
+          <div className="space-y-8">
+            {MENU_CATEGORIES.map((category) => {
+              const drinks = MENU_DRINKS.filter((d) => d.category === category.id);
               return (
-                <div
-                  key={drink.id}
-                  className={`rounded-[1.25rem] border bg-white/85 p-4 transition-colors sm:p-5 ${
-                    qty > 0 ? "border-orange-accent/40" : "border-border"
-                  }`}
-                >
-                  <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                    <div>
-                      <p className="font-semibold text-charcoal">{drink.name}</p>
-                      <p className="text-xs font-medium uppercase tracking-wider text-muted-soft">
-                        {getCategoryName(drink.category)}
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <button
-                        type="button"
-                        aria-label={`Decrease ${drink.name}`}
-                        className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-cream text-lg font-semibold hover:bg-peach-100 disabled:opacity-40"
-                        onClick={() => adjust(drink.id, -1)}
-                        disabled={qty <= 0}
-                      >
-                        −
-                      </button>
-                      <span className="w-8 text-center text-lg font-semibold tabular-nums">
-                        {qty}
-                      </span>
-                      <button
-                        type="button"
-                        aria-label={`Increase ${drink.name}`}
-                        className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-cream text-lg font-semibold hover:bg-peach-100 disabled:opacity-40"
-                        onClick={() => adjust(drink.id, 1)}
-                        disabled={total >= cups}
-                      >
-                        +
-                      </button>
-                    </div>
+                <div key={category.id}>
+                  <h4 className="mb-3 text-sm font-semibold uppercase tracking-[0.14em] text-muted">
+                    {category.name}
+                  </h4>
+                  <div className="space-y-3">
+                    {drinks.map((drink) => {
+                      const qty = getQty(drink.id);
+                      const topping = getTopping(drink.id);
+                      return (
+                        <div
+                          key={drink.id}
+                          className={`rounded-[1.25rem] border bg-white/85 p-4 transition-colors sm:p-5 ${
+                            qty > 0 ? "border-orange-accent/40" : "border-border"
+                          }`}
+                        >
+                          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                            <div>
+                              <p className="font-semibold text-charcoal">{drink.name}</p>
+                              <p className="text-xs font-medium uppercase tracking-wider text-muted-soft">
+                                {getCategoryName(drink.category)}
+                              </p>
+                            </div>
+                            <div className="flex items-center justify-between gap-3 sm:justify-end">
+                              <button
+                                type="button"
+                                aria-label={`Decrease ${drink.name}`}
+                                className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-cream text-lg font-semibold hover:bg-peach-100 disabled:opacity-40"
+                                onClick={() => adjust(drink.id, -1)}
+                                disabled={qty <= 0}
+                              >
+                                −
+                              </button>
+                              <span className="w-8 text-center text-lg font-semibold tabular-nums">
+                                {qty}
+                              </span>
+                              <button
+                                type="button"
+                                aria-label={`Increase ${drink.name}`}
+                                className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-cream text-lg font-semibold hover:bg-peach-100 disabled:opacity-40"
+                                onClick={() => adjust(drink.id, 1)}
+                                disabled={total >= cups}
+                              >
+                                +
+                              </button>
+                            </div>
+                          </div>
+                          {qty > 0 ? (
+                            <fieldset className="mt-4">
+                              <legend className="sr-only">Topping for {drink.name}</legend>
+                              <div className="flex flex-wrap gap-2">
+                                {TOPPINGS.map((t) => (
+                                  <label
+                                    key={t.id}
+                                    className={`cursor-pointer rounded-full border px-3 py-1.5 text-sm font-medium transition-colors ${
+                                      topping === t.id
+                                        ? "border-orange-accent bg-peach-100 text-charcoal"
+                                        : "border-border bg-white text-muted hover:border-orange-accent/30"
+                                    }`}
+                                  >
+                                    <input
+                                      type="radio"
+                                      className="sr-only"
+                                      name={`topping-${drink.id}`}
+                                      checked={topping === t.id}
+                                      onChange={() => setSelection(drink.id, qty, t.id)}
+                                    />
+                                    {t.name}
+                                  </label>
+                                ))}
+                              </div>
+                              <p className="mt-2 text-xs text-muted">
+                                Still $5 — topping never changes the price.
+                              </p>
+                            </fieldset>
+                          ) : null}
+                        </div>
+                      );
+                    })}
                   </div>
-                  {qty > 0 ? (
-                    <fieldset className="mt-4">
-                      <legend className="sr-only">Topping for {drink.name}</legend>
-                      <div className="flex flex-wrap gap-2">
-                        {TOPPINGS.map((t) => (
-                          <label
-                            key={t.id}
-                            className={`cursor-pointer rounded-full border px-3 py-1.5 text-sm font-medium transition-colors ${
-                              topping === t.id
-                                ? "border-orange-accent bg-peach-100 text-charcoal"
-                                : "border-border bg-white text-muted hover:border-orange-accent/30"
-                            }`}
-                          >
-                            <input
-                              type="radio"
-                              className="sr-only"
-                              name={`topping-${drink.id}`}
-                              checked={topping === t.id}
-                              onChange={() => setSelection(drink.id, qty, t.id)}
-                            />
-                            {t.name}
-                          </label>
-                        ))}
-                      </div>
-                      <p className="mt-2 text-xs text-muted">Still $5 — topping never changes the price.</p>
-                    </fieldset>
-                  ) : null}
                 </div>
               );
             })}
@@ -225,7 +240,7 @@ function RecommendationCard({
       <button
         type="button"
         onClick={onUse}
-        className="mt-5 inline-flex rounded-full bg-charcoal px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-ink"
+        className="mt-5 flex w-full items-center justify-center rounded-full bg-charcoal px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-ink sm:w-auto"
       >
         Use This Mix
       </button>
@@ -290,39 +305,51 @@ export function BoothMenuSelector({
       </button>
 
       {!state.letSunsetRecommendMenu ? (
-        <div className="grid gap-3 sm:grid-cols-2">
-          {MENU_DRINKS.map((drink) => {
-            const selected = state.boothDrinkIds.includes(drink.id);
+        <div className="space-y-8">
+          {MENU_CATEGORIES.map((category) => {
+            const drinks = MENU_DRINKS.filter((d) => d.category === category.id);
             return (
-              <button
-                key={drink.id}
-                type="button"
-                onClick={() => toggleDrink(drink.id)}
-                className={`rounded-[1.25rem] border p-4 text-left transition-all ${
-                  selected
-                    ? "border-orange-accent bg-peach-50"
-                    : "border-border bg-white/85 hover:border-orange-accent/30"
-                }`}
-              >
-                <div className="flex items-start justify-between gap-2">
-                  <div>
-                    <p className="font-semibold text-charcoal">{drink.name}</p>
-                    <p className="text-xs uppercase tracking-wider text-muted-soft">
-                      {getCategoryName(drink.category)}
-                    </p>
-                  </div>
-                  <span
-                    aria-hidden
-                    className={`flex h-5 w-5 items-center justify-center rounded-md border text-xs ${
-                      selected
-                        ? "border-orange-accent bg-orange-accent text-white"
-                        : "border-muted-soft"
-                    }`}
-                  >
-                    {selected ? "✓" : ""}
-                  </span>
+              <div key={category.id}>
+                <h4 className="mb-3 text-sm font-semibold uppercase tracking-[0.14em] text-muted">
+                  {category.name}
+                </h4>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  {drinks.map((drink) => {
+                    const selected = state.boothDrinkIds.includes(drink.id);
+                    return (
+                      <button
+                        key={drink.id}
+                        type="button"
+                        onClick={() => toggleDrink(drink.id)}
+                        className={`rounded-[1.25rem] border p-4 text-left transition-all ${
+                          selected
+                            ? "border-orange-accent bg-peach-50"
+                            : "border-border bg-white/85 hover:border-orange-accent/30"
+                        }`}
+                      >
+                        <div className="flex items-start justify-between gap-2">
+                          <div>
+                            <p className="font-semibold text-charcoal">{drink.name}</p>
+                            <p className="text-xs uppercase tracking-wider text-muted-soft">
+                              {getCategoryName(drink.category)}
+                            </p>
+                          </div>
+                          <span
+                            aria-hidden
+                            className={`flex h-5 w-5 items-center justify-center rounded-md border text-xs ${
+                              selected
+                                ? "border-orange-accent bg-orange-accent text-white"
+                                : "border-muted-soft"
+                            }`}
+                          >
+                            {selected ? "✓" : ""}
+                          </span>
+                        </div>
+                      </button>
+                    );
+                  })}
                 </div>
-              </button>
+              </div>
             );
           })}
         </div>

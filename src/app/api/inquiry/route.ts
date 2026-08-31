@@ -47,13 +47,17 @@ export async function POST(req: Request) {
   }
   recentSubmissions.set(key, now);
 
-  const apiKey = process.env.RESEND_API_KEY;
+  const apiKey = process.env.RESEND_API_KEY?.trim();
   const toEmail = process.env.INQUIRY_TO_EMAIL || SITE.inquiryEmail;
   const fromEmail =
-    process.env.INQUIRY_FROM_EMAIL || "Sunset Tea Inquiries <onboarding@resend.dev>";
+    process.env.INQUIRY_FROM_EMAIL?.trim() ||
+    "Sunset Tea Inquiries <onboarding@resend.dev>";
 
-  if (!apiKey) {
-    console.info("[inquiry] RESEND_API_KEY missing — logging inquiry instead of sending email.");
+  const keyLooksUnset =
+    !apiKey || apiKey.includes("xxxxxxxx") || apiKey === "re_xxxxxxxx";
+
+  if (keyLooksUnset) {
+    console.info("[inquiry] RESEND_API_KEY missing or placeholder — logging inquiry.");
     console.info(JSON.stringify({ to: toEmail, ...body }, null, 2));
     return NextResponse.json({
       ok: true,
@@ -77,8 +81,15 @@ export async function POST(req: Request) {
 
     if (result.error) {
       console.error("[inquiry] Resend error", result.error);
+      const devHint =
+        process.env.NODE_ENV === "development"
+          ? ` (${result.error.message})`
+          : "";
       return NextResponse.json(
-        { ok: false, error: "Could not send email. Please try again shortly." },
+        {
+          ok: false,
+          error: `Could not send email. Please try again shortly.${devHint}`,
+        },
         { status: 502 },
       );
     }

@@ -21,29 +21,40 @@ export function BubbleHero({
   density = "full",
   compact = false,
 }: BubbleHeroProps) {
+  const contentPad = compact
+    ? "pb-12 pt-[calc(var(--header-h)+1.75rem)] sm:pb-20 sm:pt-[calc(var(--header-h)+3rem)]"
+    : "pb-14 pt-[calc(var(--header-h)+1.75rem)] sm:pb-28 sm:pt-[calc(var(--header-h)+3.5rem)]";
+
   return (
-    <section
-      className={`relative overflow-hidden bg-warm-wash ${
-        compact ? "pb-16 pt-10 sm:pb-20 sm:pt-14" : "pb-20 pt-10 sm:pb-28 sm:pt-16"
-      }`}
-    >
-      <Bubbles density={density} />
+    <section className={`relative overflow-hidden ${contentPad}`}>
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 top-[calc(-1*var(--header-h))] -z-10 overflow-hidden bg-warm-wash"
+        aria-hidden
+      >
+        <Bubbles density={density} />
+      </div>
+
       <Container className="relative z-10">
         <div
-          className={`grid items-center gap-10 lg:gap-16 ${
-            aside ? "lg:grid-cols-[1.15fr_0.85fr]" : ""
+          className={`grid gap-8 sm:gap-10 lg:gap-16 ${
+            aside ? "items-start lg:grid-cols-[1.15fr_0.85fr]" : "items-center"
           }`}
         >
           <div className="motion-safe-fade max-w-3xl">
-            {eyebrow ? <p className="eyebrow mb-4">{eyebrow}</p> : null}
+            {eyebrow ? <p className="eyebrow mb-3 sm:mb-4">{eyebrow}</p> : null}
             <h1 className="display-xl">{title}</h1>
-            {description ? <div className="lead mt-6">{description}</div> : null}
+            {description ? <div className="lead mt-4 sm:mt-6">{description}</div> : null}
             {actions ? (
-              <div className="mt-8 flex flex-wrap items-center gap-3 sm:gap-4">{actions}</div>
+              <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4 [&_a]:w-full sm:[&_a]:w-auto [&_button]:w-full sm:[&_button]:w-auto">
+                {actions}
+              </div>
             ) : null}
           </div>
           {aside ? (
-            <div className="motion-safe-fade relative mx-auto w-full max-w-md lg:max-w-none" style={{ animationDelay: "120ms" }}>
+            <div
+              className="motion-safe-fade relative mx-auto w-full max-w-[19rem] sm:max-w-[21rem] lg:max-w-[23rem] lg:ml-auto xl:max-w-[24rem]"
+              style={{ animationDelay: "120ms" }}
+            >
               {aside}
             </div>
           ) : null}

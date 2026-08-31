@@ -20,7 +20,7 @@ const sizes: Record<Size, string> = {
 };
 
 const base =
-  "inline-flex items-center justify-center gap-2 font-semibold tracking-tight transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-accent disabled:opacity-50 disabled:pointer-events-none disabled:translate-y-0";
+  "inline-flex cursor-pointer items-center justify-center gap-2 font-semibold tracking-tight transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-accent disabled:cursor-not-allowed disabled:opacity-50 disabled:pointer-events-none disabled:translate-y-0";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: Variant;
@@ -48,6 +48,7 @@ interface ButtonLinkProps {
   size?: Size;
   className?: string;
   children: ReactNode;
+  onClick?: () => void;
 }
 
 export function ButtonLink({
@@ -56,9 +57,14 @@ export function ButtonLink({
   size = "md",
   className = "",
   children,
+  onClick,
 }: ButtonLinkProps) {
   return (
-    <Link href={href} className={`${base} ${variants[variant]} ${sizes[size]} ${className}`}>
+    <Link
+      href={href}
+      onClick={onClick}
+      className={`${base} ${variants[variant]} ${sizes[size]} ${className}`}
+    >
       {children}
     </Link>
   );

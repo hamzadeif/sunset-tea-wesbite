@@ -7,9 +7,11 @@ import { PACKAGES } from "@/lib/config/packages";
 export function PriceSummary({
   state,
   sticky = false,
+  className = "",
 }: {
   state: InquiryFormState;
   sticky?: boolean;
+  className?: string;
 }) {
   const price = calculatePrice(state);
   if (!price || !state.packageId) return null;
@@ -18,25 +20,25 @@ export function PriceSummary({
 
   return (
     <aside
-      className={`rounded-[1.5rem] border border-border bg-white/90 p-5 shadow-[var(--shadow-soft)] backdrop-blur-sm ${
+      className={`rounded-[1.25rem] border border-border bg-white/90 p-4 shadow-[var(--shadow-soft)] backdrop-blur-sm sm:rounded-[1.5rem] sm:p-5 ${
         sticky ? "lg:sticky lg:top-24" : ""
-      }`}
+      } ${className}`}
       aria-live="polite"
     >
       <p className="eyebrow">Summary</p>
-      <h3 className="mt-2 font-display text-xl text-charcoal">{pkg.name}</h3>
+      <h3 className="mt-2 font-display text-lg text-charcoal sm:text-xl">{pkg.name}</h3>
 
       <dl className="mt-4 space-y-2.5 text-sm">
         <div className="flex items-start justify-between gap-3">
-          <dt className="text-muted">{price.drinkLine.label}</dt>
-          <dd className="font-semibold text-charcoal">
+          <dt className="max-w-[65%] text-muted">{price.drinkLine.label}</dt>
+          <dd className="shrink-0 font-semibold text-charcoal">
             {formatCurrency(price.drinkLine.amount)}
           </dd>
         </div>
         {price.serviceLine ? (
           <div className="flex items-start justify-between gap-3">
             <dt className="text-muted">{price.serviceLine.label}</dt>
-            <dd className="font-semibold text-charcoal">
+            <dd className="shrink-0 font-semibold text-charcoal">
               {formatCurrency(price.serviceLine.amount)}
             </dd>
           </div>
@@ -53,7 +55,9 @@ export function PriceSummary({
         <p className="text-sm font-semibold text-ink">
           {price.isEstimate ? "Estimated Total" : "Total"}
         </p>
-        <p className="font-display text-3xl text-charcoal">{formatCurrency(price.total)}</p>
+        <p className="font-display text-2xl text-charcoal sm:text-3xl">
+          {formatCurrency(price.total)}
+        </p>
       </div>
       {price.isEstimate ? (
         <p className="mt-2 text-xs text-muted">

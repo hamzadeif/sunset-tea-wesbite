@@ -5,7 +5,7 @@ import { Container, Eyebrow, Section } from "@/components/ui/Container";
 
 export function FAQAccordion() {
   return (
-    <Section id="faq" alt>
+    <Section id="faq" alt className="!pt-10 sm:!pt-12 lg:!pt-14">
       <Container>
         <div className="mx-auto max-w-2xl text-center">
           <Eyebrow>FAQ</Eyebrow>

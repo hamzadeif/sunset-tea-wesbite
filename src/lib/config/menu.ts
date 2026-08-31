@@ -1,4 +1,4 @@
-export type DrinkCategory = "milk-teas" | "fruit-teas" | "fresh-drinks";
+export type DrinkCategory = "milk-teas" | "matcha" | "fruit-teas" | "fresh-drinks";
 
 export type ToppingId = "homemade-boba" | "lychee-jelly" | "none";
 
@@ -21,6 +21,7 @@ export interface PopularCombo {
 
 export const MENU_CATEGORIES: { id: DrinkCategory; name: string }[] = [
   { id: "milk-teas", name: "Milk Teas" },
+  { id: "matcha", name: "Matcha" },
   { id: "fruit-teas", name: "Fruit Teas" },
   { id: "fresh-drinks", name: "Fresh Drinks" },
 ];
@@ -30,6 +31,10 @@ export const MENU_DRINKS: MenuDrink[] = [
   { id: "jasmine-milk-tea", name: "Jasmine Milk Tea", category: "milk-teas" },
   { id: "mango-milk-tea", name: "Mango Milk Tea", category: "milk-teas" },
   { id: "strawberry-milk-tea", name: "Strawberry Milk Tea", category: "milk-teas" },
+  { id: "classic-matcha", name: "Classic Matcha", category: "matcha" },
+  { id: "strawberry-matcha", name: "Strawberry Matcha", category: "matcha" },
+  { id: "vanilla-matcha", name: "Vanilla Matcha", category: "matcha" },
+  { id: "salted-caramel-matcha", name: "Salted Caramel Matcha", category: "matcha" },
   { id: "strawberry-fruit-tea", name: "Strawberry Fruit Tea", category: "fruit-teas" },
   { id: "strawberry-mango-fruit-tea", name: "Strawberry Mango Fruit Tea", category: "fruit-teas" },
   { id: "brown-sugar-boba-milk", name: "Brown Sugar Boba Milk", category: "fresh-drinks" },

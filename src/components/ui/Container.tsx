@@ -24,7 +24,7 @@ export function Section({
   return (
     <section
       id={id}
-      className={`relative py-20 sm:py-24 lg:py-28 ${alt ? "bg-section-alt" : ""} ${className}`}
+      className={`relative py-14 sm:py-20 lg:py-28 ${alt ? "bg-section-alt" : ""} ${className}`}
     >
       {children}
     </section>

@@ -5,14 +5,16 @@ export const SITE = {
   /** Update after connecting your custom domain. */
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   inquiryEmail: "hamzadeif77@gmail.com",
-  /** Leave empty until real handles are ready — footer only shows configured links. */
+  logo: "/images/sunset_tea_logo_nameless.png",
   social: {
-    instagram: "",
+    instagram: "https://instagram.com/sunsettea.co",
+    instagramHandle: "sunsettea.co",
     tiktok: "",
   },
   contact: {
-    email: "",
-    phone: "",
+    email: "hamzadeif77@gmail.com",
+    phone: "8056355192",
+    phoneDisplay: "(805) 635-5192",
   },
 };
 

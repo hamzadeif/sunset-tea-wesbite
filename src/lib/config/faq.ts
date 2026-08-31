@@ -12,11 +12,6 @@ export const FAQ_ITEMS: FAQItem[] = [
       "Weddings, corporate events, campus events, birthdays, graduations, private celebrations — and pretty much anything in between. If you're gathering people, we can bring the drinks.",
   },
   {
-    id: "minimum",
-    question: "Is there a minimum order?",
-    answer: "No. Sunset Tea currently has no minimum order.",
-  },
-  {
     id: "cost",
     question: "How much does catering cost?",
     answer:

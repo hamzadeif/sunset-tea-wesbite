@@ -99,7 +99,7 @@ export function InquiryForm() {
 
   if (submitted) {
     return (
-      <div className="rounded-[2rem] border border-border bg-white/85 p-8 text-center shadow-[var(--shadow-soft)] sm:p-12">
+      <div className="rounded-[1.25rem] border border-border bg-white/85 p-6 text-center shadow-[var(--shadow-soft)] sm:rounded-[2rem] sm:p-12">
         <p className="eyebrow">Inquiry received</p>
         <h2 className="display-md mt-3">You&apos;re all set.</h2>
         <p className="lead mx-auto mt-4">
@@ -114,8 +114,8 @@ export function InquiryForm() {
   }
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_300px]">
-      <div className="rounded-[2rem] border border-border bg-white/85 p-5 shadow-[var(--shadow-soft)] sm:p-8 relative">
+    <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_300px] lg:gap-8">
+      <div className="relative rounded-[1.25rem] border border-border bg-white/85 p-4 shadow-[var(--shadow-soft)] sm:rounded-[2rem] sm:p-8">
         <Progress steps={STEPS} current={stepIndex} />
 
         <div className="mt-8">
@@ -155,17 +155,18 @@ export function InquiryForm() {
 
         {submitError ? <p className="error-text mt-4">{submitError}</p> : null}
 
-        <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-border pt-6">
+        <div className="mt-8 flex flex-col-reverse gap-3 border-t border-border pt-6 sm:flex-row sm:items-center sm:justify-between">
           <Button
             type="button"
             variant="ghost"
             onClick={goBack}
             disabled={stepIndex === 0 || isPending}
+            className="w-full sm:w-auto"
           >
             Back
           </Button>
           {step !== "review" ? (
-            <Button type="button" variant="soft" size="lg" onClick={goNext}>
+            <Button type="button" variant="soft" size="lg" onClick={goNext} className="w-full sm:w-auto">
               Continue
             </Button>
           ) : (
@@ -175,6 +176,7 @@ export function InquiryForm() {
               size="lg"
               onClick={handleSubmit}
               disabled={isPending}
+              className="w-full sm:w-auto"
             >
               {isPending ? "Sending…" : "Submit Inquiry"}
             </Button>
@@ -183,7 +185,7 @@ export function InquiryForm() {
       </div>
 
       <div className={showPrice ? "block" : "hidden lg:block lg:invisible"}>
-        {showPrice ? <PriceSummary state={state} sticky /> : <div />}
+        {showPrice ? <PriceSummary state={state} className="sm:sticky sm:top-24" /> : <div />}
       </div>
     </div>
   );
@@ -197,11 +199,14 @@ function Progress({
   current: number;
 }) {
   return (
-    <ol className="flex flex-wrap gap-2" aria-label="Form progress">
+    <ol
+      className="scrollbar-none -mx-1 flex gap-2 overflow-x-auto px-1 pb-1"
+      aria-label="Form progress"
+    >
       {steps.map((s, i) => (
         <li
           key={s.id}
-          className={`rounded-full px-3 py-1 text-xs font-semibold tracking-wide ${
+          className={`shrink-0 rounded-full px-3 py-1.5 text-xs font-semibold tracking-wide ${
             i === current
               ? "bg-orange-accent text-white"
               : i < current

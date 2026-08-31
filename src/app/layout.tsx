@@ -29,11 +29,11 @@ export const metadata: Metadata = {
     description: SITE.tagline,
     siteName: SITE.name,
     type: "website",
-    images: [{ url: "/images/sunset-tea-logo.png", width: 512, height: 512, alt: "Sunset Tea" }],
+    images: [{ url: SITE.logo, width: 512, height: 512, alt: "Sunset Tea" }],
   },
   icons: {
-    icon: "/images/sunset-tea-logo.png",
-    apple: "/images/sunset-tea-logo.png",
+    icon: SITE.logo,
+    apple: SITE.logo,
   },
 };
 

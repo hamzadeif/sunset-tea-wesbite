@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Image from "next/image";
 import { BubbleHero } from "@/components/hero/BubbleHero";
 import { PackageCard } from "@/components/packages/PackageCard";
 import { CTASection } from "@/components/cta/CTASection";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container, Eyebrow, Section } from "@/components/ui/Container";
-import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import { PACKAGE_LIST } from "@/lib/config/packages";
 import { SITE } from "@/lib/config/site";
 
@@ -19,14 +18,14 @@ export const metadata: Metadata = {
   },
 };
 
-const EVENT_TYPES = [
-  { name: "Weddings", tone: "booth" as const },
-  { name: "Corporate Events", tone: "dropoff" as const },
-  { name: "Campus Events", tone: "event" as const },
-  { name: "Birthdays", tone: "about" as const },
-  { name: "Graduations", tone: "hero" as const },
-  { name: "Private Celebrations", tone: "generic" as const },
-];
+// const EVENT_TYPES = [
+//   { name: "Weddings", tone: "booth" as const },
+//   { name: "Corporate Events", tone: "dropoff" as const },
+//   { name: "Campus Events", tone: "event" as const },
+//   { name: "Birthdays", tone: "about" as const },
+//   { name: "Graduations", tone: "hero" as const },
+//   { name: "Private Celebrations", tone: "generic" as const },
+// ];
 
 export default function HomePage() {
   return (
@@ -52,11 +51,16 @@ export default function HomePage() {
           </>
         }
         aside={
-          <ImagePlaceholder
-            tone="hero"
-            label="Replace with drink photo"
-            className="aspect-[4/5] shadow-[var(--shadow-soft)]"
-          />
+          <div className="motion-safe-float">
+            <Image
+              src="/images/drop-off-catering-close-up.PNG"
+              alt="Sunset Tea drop-off catering drinks ready to serve"
+              width={600}
+              height={750}
+              priority
+              className="aspect-[4/5] w-full rounded-[1.25rem] object-cover shadow-[var(--shadow-soft)] sm:rounded-[2rem]"
+            />
+          </div>
         }
       />
 
@@ -81,10 +85,12 @@ export default function HomePage() {
       <Section alt>
         <Container>
           <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
-            <ImagePlaceholder
-              tone="about"
-              label="Replace with brand photo"
-              className="aspect-[5/4] max-w-xl"
+            <Image
+              src="/images/sunset_tea_four_cups.JPG"
+              alt="Four Sunset Tea drinks on a table"
+              width={900}
+              height={720}
+              className="aspect-[5/4] w-full max-w-xl rounded-[1.25rem] object-cover shadow-[var(--shadow-soft)] sm:rounded-[2rem]"
             />
             <div>
               <Eyebrow>About Us</Eyebrow>
@@ -95,8 +101,8 @@ export default function HomePage() {
                 grown into events, catering, and celebrations — while keeping the same focus on
                 quality drinks, friendly service, and making every experience feel easy and fun.
               </p>
-              <div className="mt-8">
-                <ButtonLink href="/catering" variant="primary" size="lg">
+              <div className="mt-6 sm:mt-8">
+                <ButtonLink href="/catering" variant="primary" size="lg" className="w-full sm:w-auto">
                   Explore Catering
                 </ButtonLink>
               </div>
@@ -105,6 +111,7 @@ export default function HomePage() {
         </Container>
       </Section>
 
+      {/* Made for gatherings — hidden until more photography is available
       <Section>
         <Container>
           <div className="mx-auto max-w-2xl text-center">
@@ -146,6 +153,7 @@ export default function HomePage() {
           </div>
         </Container>
       </Section>
+      */}
 
       <CTASection
         eyebrow="Ready when you are"

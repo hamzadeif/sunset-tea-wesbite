@@ -13,21 +13,21 @@ export function Accordion({ items }: { items: AccordionItem[] }) {
   const baseId = useId();
 
   return (
-    <div className="divide-y divide-border rounded-[1.75rem] border border-border bg-white/70 backdrop-blur-sm">
+    <div className="divide-y divide-border rounded-[1.25rem] border border-border bg-white/70 backdrop-blur-sm sm:rounded-[1.75rem]">
       {items.map((item) => {
         const isOpen = openId === item.id;
         const panelId = `${baseId}-${item.id}-panel`;
         const buttonId = `${baseId}-${item.id}-button`;
 
         return (
-          <div key={item.id} className="px-5 sm:px-7">
+          <div key={item.id} className="px-4 sm:px-7">
             <h3>
               <button
                 id={buttonId}
                 type="button"
                 aria-expanded={isOpen}
                 aria-controls={panelId}
-                className="flex w-full items-center justify-between gap-4 py-5 text-left text-base font-semibold text-charcoal transition-colors hover:text-orange-deep sm:text-lg"
+                className="flex w-full items-center justify-between gap-3 py-4 text-left text-[0.95rem] font-semibold text-charcoal transition-colors hover:text-orange-deep sm:gap-4 sm:py-5 sm:text-lg"
                 onClick={() => setOpenId(isOpen ? null : item.id)}
               >
                 <span>{item.title}</span>

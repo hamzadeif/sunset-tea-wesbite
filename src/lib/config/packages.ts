@@ -18,7 +18,8 @@ export interface PackageConfig {
   homeFeatures: string[];
   ctaLabel: string;
   inquireHref: string;
-  imagePlaceholder: string;
+  image: string;
+  imageAlt: string;
 }
 
 export const PACKAGES: Record<PackageId, PackageConfig> = {
@@ -61,7 +62,8 @@ export const PACKAGES: Record<PackageId, PackageConfig> = {
     ],
     ctaLabel: "Inquire About Drop-Off",
     inquireHref: "/inquiries?package=dropoff",
-    imagePlaceholder: "dropoff",
+    image: "/images/drop-off-catering-wide-view.PNG",
+    imageAlt: "Sunset Tea drop-off catering setup",
   },
   booth: {
     id: "booth",
@@ -101,7 +103,8 @@ export const PACKAGES: Record<PackageId, PackageConfig> = {
     ],
     ctaLabel: "Inquire About Full Booth",
     inquireHref: "/inquiries?package=booth",
-    imagePlaceholder: "booth",
+    image: "/images/catering-booth-wedding.PNG",
+    imageAlt: "Sunset Tea full booth service at a wedding",
   },
 };
 
