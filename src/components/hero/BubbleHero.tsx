@@ -1,9 +1,12 @@
 import { type ReactNode } from "react";
 import { Bubbles } from "./Bubbles";
 import { Container } from "@/components/ui/Container";
+import { Reveal } from "@/components/ui/Reveal";
 
 interface BubbleHeroProps {
   eyebrow?: string;
+  /** Short punchy line between eyebrow and headline */
+  tagline?: string;
   title: ReactNode;
   description?: ReactNode;
   actions?: ReactNode;
@@ -18,6 +21,7 @@ interface BubbleHeroProps {
 
 export function BubbleHero({
   eyebrow,
+  tagline,
   title,
   description,
   actions,
@@ -52,26 +56,41 @@ export function BubbleHero({
         >
           <div className={`motion-safe-fade max-w-3xl ${home ? "" : ""}`}>
             {eyebrow ? (
-              <p className={`eyebrow ${home ? "mb-5 tracking-[0.18em] sm:mb-4 sm:tracking-[0.14em]" : "mb-3 sm:mb-4"}`}>
-                {eyebrow}
-              </p>
+              <Reveal variant="fade" delay={0} immediate>
+                <p className={`eyebrow ${home ? "mb-5 tracking-[0.18em] sm:mb-4 sm:tracking-[0.14em]" : "mb-3 sm:mb-4"}`}>
+                  {eyebrow}
+                </p>
+              </Reveal>
             ) : null}
-            <h1 className={home ? "hero-headline display-xl" : "display-xl"}>{title}</h1>
+            {tagline ? (
+              <Reveal variant="fade" delay={50} immediate>
+                <p className="mt-3 font-display text-[1.05rem] italic leading-snug text-orange-deep/90 sm:mt-2 sm:text-xl">
+                  {tagline}
+                </p>
+              </Reveal>
+            ) : null}
+            <Reveal variant="up" delay={80} immediate>
+              <h1 className={home ? "hero-headline display-xl" : "display-xl"}>{title}</h1>
+            </Reveal>
             {description ? (
-              <div
-                className={`lead mt-5 sm:mt-6 ${home ? "max-w-[19rem] text-[0.9375rem] leading-relaxed sm:max-w-[36rem] sm:text-base" : ""}`}
-              >
-                {description}
-              </div>
+              <Reveal variant="up" delay={160} immediate>
+                <div
+                  className={`lead mt-5 sm:mt-6 ${home ? "max-w-[19rem] text-[0.9375rem] leading-relaxed sm:max-w-[36rem] sm:text-base" : ""}`}
+                >
+                  {description}
+                </div>
+              </Reveal>
             ) : null}
             {actions ? (
-              <div
-                className={`mt-7 flex flex-col sm:mt-8 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4 ${
-                  home ? "items-start gap-3.5 sm:gap-4 [&_a]:w-auto [&_button]:w-auto" : "gap-3 [&_a]:w-full sm:[&_a]:w-auto [&_button]:w-full sm:[&_button]:w-auto"
-                }`}
-              >
-                {actions}
-              </div>
+              <Reveal variant="up" delay={240} immediate>
+                <div
+                  className={`mt-7 flex flex-col sm:mt-8 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4 ${
+                    home ? "items-start gap-3.5 sm:gap-4 [&_a]:w-auto [&_button]:w-auto" : "gap-3 [&_a]:w-full sm:[&_a]:w-auto [&_button]:w-full sm:[&_button]:w-auto"
+                  }`}
+                >
+                  {actions}
+                </div>
+              </Reveal>
             ) : null}
             {microcopy ? (
               <p
@@ -84,16 +103,18 @@ export function BubbleHero({
             ) : null}
           </div>
           {aside ? (
-            <div
-              className={`motion-safe-fade relative mx-auto w-full ${
+            <Reveal
+              variant="scale"
+              delay={180}
+              immediate
+              className={`relative mx-auto w-full ${
                 home
                   ? "max-w-[16.5rem] pt-1 sm:max-w-[21rem] sm:pt-0 lg:ml-auto lg:max-w-[23rem] xl:max-w-[24rem]"
                   : "max-w-[19rem] sm:max-w-[21rem] lg:ml-auto lg:max-w-[23rem] xl:max-w-[24rem]"
               }`}
-              style={{ animationDelay: "120ms" }}
             >
               {aside}
-            </div>
+            </Reveal>
           ) : null}
         </div>
       </Container>

@@ -5,6 +5,7 @@ import { FAQAccordion } from "@/components/faq/FAQAccordion";
 import { InquiryForm } from "@/components/inquiry/InquiryForm";
 import { Container, Section } from "@/components/ui/Container";
 import { RESPONSE_TIME_HOURS } from "@/lib/config/business";
+import { Reveal } from "@/components/ui/Reveal";
 
 export const metadata: Metadata = {
   title: "Plan Your Event",
@@ -42,15 +43,17 @@ export default function InquiriesPage() {
 
       <Section className="!pt-4 sm:!pt-6">
         <Container>
-          <Suspense
-            fallback={
-              <div className="rounded-[2rem] border border-border bg-white/80 p-10 text-muted">
-                Loading planner…
-              </div>
-            }
-          >
-            <InquiryForm />
-          </Suspense>
+          <Reveal variant="up">
+            <Suspense
+              fallback={
+                <div className="rounded-[2rem] border border-border bg-white/80 p-10 text-muted">
+                  Loading planner…
+                </div>
+              }
+            >
+              <InquiryForm />
+            </Suspense>
+          </Reveal>
         </Container>
       </Section>
 

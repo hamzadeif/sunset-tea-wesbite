@@ -20,7 +20,7 @@ const sizes: Record<Size, string> = {
 };
 
 const base =
-  "inline-flex cursor-pointer items-center justify-center gap-2 font-semibold tracking-tight transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-accent disabled:cursor-not-allowed disabled:opacity-50 disabled:pointer-events-none disabled:translate-y-0";
+  "inline-flex cursor-pointer items-center justify-center gap-2 font-semibold tracking-tight transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-accent disabled:cursor-not-allowed disabled:opacity-50 disabled:pointer-events-none disabled:translate-y-0 disabled:scale-100 hover:scale-[1.02] active:scale-[0.98]";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: Variant;

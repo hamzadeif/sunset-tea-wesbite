@@ -4,8 +4,9 @@ import { PackageCard } from "@/components/packages/PackageCard";
 import { MenuSection } from "@/components/menu/MenuSection";
 import { CTASection } from "@/components/cta/CTASection";
 import { ButtonLink } from "@/components/ui/Button";
-import { Container, Eyebrow, Section } from "@/components/ui/Container";
+import { Container, Eyebrow, Section, SectionHeader } from "@/components/ui/Container";
 import { PACKAGE_LIST } from "@/lib/config/packages";
+import { RevealStagger } from "@/components/ui/Reveal";
 
 export const metadata: Metadata = {
   title: "Catering",
@@ -36,19 +37,19 @@ export default function CateringPage() {
 
       <Section>
         <Container>
-          <div className="mx-auto max-w-2xl text-center">
+          <SectionHeader>
             <Eyebrow>Packages</Eyebrow>
             <h2 className="display-lg mt-3">Pick the experience that fits.</h2>
             <p className="lead mx-auto mt-4">
               Two clear options. Transparent pricing. See exactly what your event costs before you
               book.
             </p>
-          </div>
-          <div className="mt-12 grid gap-6 lg:grid-cols-2 lg:gap-8">
+          </SectionHeader>
+          <RevealStagger className="mt-12 grid gap-6 lg:grid-cols-2 lg:gap-8">
             {PACKAGE_LIST.map((pkg) => (
               <PackageCard key={pkg.id} pkg={pkg} variant="detail" />
             ))}
-          </div>
+          </RevealStagger>
         </Container>
       </Section>
 

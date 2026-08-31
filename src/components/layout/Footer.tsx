@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { NAV_LINKS, SITE } from "@/lib/config/site";
 import { InstagramIcon, MailIcon, PhoneIcon } from "@/components/ui/SocialIcons";
+import { RevealStagger } from "@/components/ui/Reveal";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -9,19 +10,19 @@ export function Footer() {
   return (
     <footer className="safe-bottom relative overflow-hidden border-t border-border bg-gradient-to-b from-cream to-peach-100/60">
       <div className="pointer-events-none absolute -right-16 top-10 h-56 w-56 rounded-full bg-orange-soft/20 blur-3xl" />
-      <div className="container-page relative grid gap-8 py-10 sm:py-12 lg:grid-cols-[1.2fr_1fr_1fr] lg:gap-10">
+      <RevealStagger className="container-page relative grid gap-8 py-10 sm:py-12 lg:grid-cols-[1.2fr_1fr_1fr] lg:gap-10" stagger={100}>
         <div>
-          <Link href="/" className="inline-flex items-center gap-2.5">
+          <Link href="/" className="inline-flex items-center gap-2.5 transition-opacity hover:opacity-80">
             <Image
               src={SITE.logo}
               alt="Sunset Tea logo"
-              width={48}
-              height={48}
-              className="h-11 w-11 object-contain"
+              width={52}
+              height={52}
+              className="h-12 w-12 object-contain"
             />
             <span className="font-display text-xl text-charcoal">Sunset Tea</span>
           </Link>
-          <p className="mt-2.5 max-w-sm text-sm text-muted leading-relaxed">{SITE.shortLine}</p>
+          <p className="mt-2.5 max-w-sm text-sm leading-relaxed text-muted">{SITE.shortLine}</p>
         </div>
 
         <div>
@@ -94,7 +95,7 @@ export function Footer() {
             ) : null}
           </ul>
         </div>
-      </div>
+      </RevealStagger>
 
       <div className="container-page border-t border-border/70 py-4 text-sm text-muted-soft">
         © {year} {SITE.name}. All rights reserved.

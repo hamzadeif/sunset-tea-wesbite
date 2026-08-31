@@ -6,7 +6,8 @@ import {
   type DrinkCategory,
 } from "@/lib/config/menu";
 import { DROP_OFF_PRICE_PER_DRINK } from "@/lib/config/business";
-import { Container, Eyebrow, Section } from "@/components/ui/Container";
+import { Container, Eyebrow, Section, SectionHeader } from "@/components/ui/Container";
+import { Reveal, RevealStagger } from "@/components/ui/Reveal";
 
 const CATEGORY_STYLE: Record<
   DrinkCategory,
@@ -38,28 +39,26 @@ export function MenuSection() {
   return (
     <Section id="menu" alt className="!pt-10 sm:!pt-12 lg:!pt-14">
       <Container>
-        <div className="mx-auto max-w-2xl text-center">
+        <SectionHeader>
           <Eyebrow>Signature Drinks</Eyebrow>
           <h2 className="display-lg mt-3">The Menu</h2>
           <p className="lead mx-auto mt-4">
             Boba, matcha, and more — every drink is ${DROP_OFF_PRICE_PER_DRINK} with a topping
             included. Mix and match for your event.
           </p>
-        </div>
+        </SectionHeader>
 
         <CrowdFavorites />
 
-        <div className="mt-10 grid gap-4 sm:mt-14 sm:grid-cols-2 sm:gap-5 lg:gap-6">
-          {MENU_CATEGORIES.map((category, index) => {
+        <RevealStagger className="mt-10 grid gap-4 sm:mt-14 sm:grid-cols-2 sm:gap-5 lg:gap-6">
+          {MENU_CATEGORIES.map((category) => {
             const drinks = MENU_DRINKS.filter((d) => d.category === category.id);
             const style = CATEGORY_STYLE[category.id];
 
             return (
               <article
                 key={category.id}
-                className={`group relative overflow-hidden rounded-[1.25rem] border border-border bg-gradient-to-br ${style.gradient} p-5 shadow-[0_12px_40px_rgba(42,37,34,0.05)] transition-transform duration-300 sm:rounded-[1.75rem] sm:p-7 sm:hover:-translate-y-0.5 ${
-                  index === 0 ? "lg:col-span-1" : ""
-                }`}
+                className={`group relative overflow-hidden rounded-[1.25rem] border border-border bg-gradient-to-br ${style.gradient} p-5 shadow-[0_12px_40px_rgba(42,37,34,0.05)] transition-all duration-500 sm:rounded-[1.75rem] sm:p-7 sm:hover:-translate-y-1 sm:hover:shadow-[0_20px_50px_rgba(42,37,34,0.08)]`}
               >
                 <div className="pointer-events-none absolute -right-6 -top-6 h-28 w-28 rounded-full bg-white/50 blur-2xl" />
 
@@ -95,31 +94,33 @@ export function MenuSection() {
               </article>
             );
           })}
-        </div>
+        </RevealStagger>
 
-        <div className="mt-5 rounded-[1.25rem] border border-orange-accent/20 bg-gradient-to-r from-charcoal via-ink to-charcoal p-5 text-white shadow-[var(--shadow-soft)] sm:rounded-[1.75rem] sm:p-8">
-          <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-orange-soft">
-                Always included
-              </p>
-              <h3 className="mt-2 font-display text-2xl sm:text-3xl">Pick your topping</h3>
-              <p className="mt-2 max-w-md text-sm text-white/75">
-                Homemade Boba or Lychee Jelly — no extra charge on any drink.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-2.5">
-              {TOPPINGS_DISPLAY.map((topping) => (
-                <span
-                  key={topping.id}
-                  className="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold backdrop-blur-sm"
-                >
-                  {topping.name}
-                </span>
-              ))}
+        <Reveal variant="up" delay={100} className="mt-5">
+          <div className="rounded-[1.25rem] border border-orange-accent/20 bg-gradient-to-r from-charcoal via-ink to-charcoal p-5 text-white shadow-[var(--shadow-soft)] sm:rounded-[1.75rem] sm:p-8">
+            <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-orange-soft">
+                  Always included
+                </p>
+                <h3 className="mt-2 font-display text-2xl sm:text-3xl">Pick your topping</h3>
+                <p className="mt-2 max-w-md text-sm text-white/75">
+                  Homemade Boba or Lychee Jelly — no extra charge on any drink.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-2.5">
+                {TOPPINGS_DISPLAY.map((topping) => (
+                  <span
+                    key={topping.id}
+                    className="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold backdrop-blur-sm transition-transform duration-300 hover:scale-105"
+                  >
+                    {topping.name}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+        </Reveal>
       </Container>
     </Section>
   );
@@ -127,32 +128,34 @@ export function MenuSection() {
 
 function CrowdFavorites() {
   return (
-    <div className="mt-12 rounded-[2rem] border border-orange-accent/15 bg-gradient-to-br from-white via-peach-50 to-peach-100/80 p-6 sm:p-8">
-      <div className="flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <p className="eyebrow">Most Loved</p>
-          <h3 className="mt-2 font-display text-2xl text-charcoal sm:text-3xl">
-            Crowd Favorites
-          </h3>
+    <Reveal variant="scale" delay={80} className="mt-12">
+      <div className="rounded-[2rem] border border-orange-accent/15 bg-gradient-to-br from-white via-peach-50 to-peach-100/80 p-6 sm:p-8">
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <p className="eyebrow">Most Loved</p>
+            <h3 className="mt-2 font-display text-2xl text-charcoal sm:text-3xl">
+              Crowd Favorites
+            </h3>
+          </div>
+          <p className="max-w-sm text-sm text-muted">
+            The three combinations guests ask for again and again.
+          </p>
         </div>
-        <p className="max-w-sm text-sm text-muted">
-          The three combinations guests ask for again and again.
-        </p>
+        <RevealStagger className="mt-6 grid gap-4 md:grid-cols-3" stagger={70}>
+          {POPULAR_COMBOS.map((combo, index) => (
+            <li
+              key={combo.label}
+              className="relative list-none rounded-[1.5rem] border border-border bg-white/80 p-5 shadow-[0_10px_30px_rgba(42,37,34,0.04)] transition-transform duration-500 hover:-translate-y-1"
+            >
+              <span className="absolute -top-3 left-5 rounded-full bg-orange-accent px-2.5 py-1 text-xs font-bold text-white">
+                #{index + 1}
+              </span>
+              <p className="mt-2 font-semibold leading-snug text-charcoal">{combo.label}</p>
+              <p className="mt-2 text-sm text-muted">${DROP_OFF_PRICE_PER_DRINK} · topping included</p>
+            </li>
+          ))}
+        </RevealStagger>
       </div>
-      <ol className="mt-6 grid gap-4 md:grid-cols-3">
-        {POPULAR_COMBOS.map((combo, index) => (
-          <li
-            key={combo.label}
-            className="relative rounded-[1.5rem] border border-border bg-white/80 p-5 shadow-[0_10px_30px_rgba(42,37,34,0.04)]"
-          >
-            <span className="absolute -top-3 left-5 rounded-full bg-orange-accent px-2.5 py-1 text-xs font-bold text-white">
-              #{index + 1}
-            </span>
-            <p className="mt-2 font-semibold text-charcoal leading-snug">{combo.label}</p>
-            <p className="mt-2 text-sm text-muted">${DROP_OFF_PRICE_PER_DRINK} · topping included</p>
-          </li>
-        ))}
-      </ol>
-    </div>
+    </Reveal>
   );
 }

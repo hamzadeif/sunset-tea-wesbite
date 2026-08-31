@@ -55,10 +55,10 @@ export function Header() {
             <Image
               src={SITE.logo}
               alt="Sunset Tea logo"
-              width={52}
-              height={52}
+              width={64}
+              height={64}
               priority
-              className="h-10 w-10 shrink-0 object-contain transition-transform duration-300 group-hover:scale-[1.03] sm:h-12 sm:w-12"
+              className="h-12 w-12 shrink-0 object-contain transition-transform duration-300 group-hover:scale-[1.05] sm:h-14 sm:w-14"
             />
             <span className="hidden truncate font-display text-base tracking-tight text-charcoal sm:inline sm:text-xl">
               Sunset Tea

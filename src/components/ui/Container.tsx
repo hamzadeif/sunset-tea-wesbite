@@ -1,4 +1,5 @@
 import { type ReactNode } from "react";
+import { Reveal } from "@/components/ui/Reveal";
 
 export function Container({
   children,
@@ -28,6 +29,22 @@ export function Section({
     >
       {children}
     </section>
+  );
+}
+
+export function SectionHeader({
+  children,
+  className = "",
+  centered = true,
+}: {
+  children: ReactNode;
+  className?: string;
+  centered?: boolean;
+}) {
+  return (
+    <Reveal variant="up" className={centered ? `mx-auto max-w-2xl text-center ${className}` : className}>
+      {children}
+    </Reveal>
   );
 }
 

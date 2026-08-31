@@ -22,5 +22,5 @@ export const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "/catering", label: "Catering" },
   { href: "/inquiries", label: "Plan Your Event" },
-  { href: "/events", label: "Pop-Ups & Events" },
+  { href: "/events", label: "Pop-Ups" },
 ] as const;

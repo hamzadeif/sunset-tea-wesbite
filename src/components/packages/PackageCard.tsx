@@ -12,7 +12,7 @@ export function PackageCard({ pkg, variant = "home" }: PackageCardProps) {
   const features = variant === "home" ? pkg.homeFeatures : pkg.features;
 
   return (
-    <article className="group relative flex h-full flex-col overflow-hidden rounded-[1.5rem] border border-border bg-white/75 shadow-[var(--shadow-soft)] backdrop-blur-sm transition-transform duration-300 sm:rounded-[2rem] sm:hover:-translate-y-1">
+    <article className="group relative flex h-full flex-col overflow-hidden rounded-[1.5rem] border border-border bg-white/75 shadow-[var(--shadow-soft)] backdrop-blur-sm transition-all duration-500 sm:rounded-[2rem] sm:hover:-translate-y-1.5 sm:hover:shadow-[0_24px_60px_rgba(42,37,34,0.1)]">
       <div className="relative overflow-hidden">
         <Image
           src={pkg.image}

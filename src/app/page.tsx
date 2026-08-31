@@ -4,9 +4,10 @@ import { BubbleHero } from "@/components/hero/BubbleHero";
 import { PackageCard } from "@/components/packages/PackageCard";
 import { CTASection } from "@/components/cta/CTASection";
 import { ButtonLink } from "@/components/ui/Button";
-import { Container, Eyebrow, Section } from "@/components/ui/Container";
+import { Container, Eyebrow, Section, SectionHeader } from "@/components/ui/Container";
 import { PACKAGE_LIST } from "@/lib/config/packages";
 import { SITE } from "@/lib/config/site";
+import { Reveal, RevealStagger } from "@/components/ui/Reveal";
 
 export const metadata: Metadata = {
   title: "Sunset Tea | Boba, Matcha & Events",
@@ -33,6 +34,7 @@ export default function HomePage() {
       <BubbleHero
         home
         eyebrow="Boba · Matcha · Events"
+        tagline="Boba catering is the new trend."
         title={
           <>
             Made to <span className="italic">Sip.</span>
@@ -81,33 +83,35 @@ export default function HomePage() {
 
       <Section>
         <Container>
-          <div className="mx-auto max-w-2xl text-center">
+          <SectionHeader>
             <Eyebrow>Choose your experience</Eyebrow>
             <h2 className="display-lg mt-3">Two ways to bring Sunset Tea</h2>
             <p className="lead mx-auto mt-4">
               Simple pricing — see your price instantly. Flexible quantities. Toppings included.
               Pick your service and book when you&apos;re ready.
             </p>
-          </div>
-          <div className="mt-12 grid gap-6 lg:grid-cols-2 lg:gap-8">
+          </SectionHeader>
+          <RevealStagger className="mt-12 grid gap-6 lg:grid-cols-2 lg:gap-8">
             {PACKAGE_LIST.map((pkg) => (
               <PackageCard key={pkg.id} pkg={pkg} variant="home" />
             ))}
-          </div>
+          </RevealStagger>
         </Container>
       </Section>
 
       <Section alt>
         <Container>
           <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
-            <Image
-              src="/images/sunset_tea_four_cups.JPG"
-              alt="Four Sunset Tea drinks on a table"
-              width={900}
-              height={720}
-              className="aspect-[5/4] w-full max-w-xl rounded-[1.25rem] object-cover shadow-[var(--shadow-soft)] sm:rounded-[2rem]"
-            />
-            <div>
+            <Reveal variant="left" className="overflow-hidden rounded-[1.25rem] sm:rounded-[2rem]">
+              <Image
+                src="/images/sunset_tea_four_cups.JPG"
+                alt="Four Sunset Tea drinks on a table"
+                width={900}
+                height={720}
+                className="aspect-[5/4] w-full max-w-xl rounded-[1.25rem] object-cover shadow-[var(--shadow-soft)] transition-transform duration-700 hover:scale-[1.02] sm:rounded-[2rem]"
+              />
+            </Reveal>
+            <Reveal variant="right" delay={120}>
               <Eyebrow>About Us</Eyebrow>
               <h2 className="display-lg mt-3">A little sunshine in every cup.</h2>
               <p className="mt-5 text-lg leading-relaxed text-muted">
@@ -121,7 +125,7 @@ export default function HomePage() {
                   Explore Catering
                 </ButtonLink>
               </div>
-            </div>
+            </Reveal>
           </div>
         </Container>
       </Section>
