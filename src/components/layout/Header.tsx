@@ -52,15 +52,18 @@ export function Header() {
             className="group flex min-w-0 items-center gap-2.5 sm:gap-3"
             aria-label={`${SITE.name} home`}
           >
-            <Image
-              src={SITE.logo}
-              alt="Sunset Tea logo"
-              width={64}
-              height={64}
-              priority
-              className="h-12 w-12 shrink-0 object-contain transition-transform duration-300 group-hover:scale-[1.05] sm:h-14 sm:w-14"
-            />
-            <span className="hidden truncate font-display text-base tracking-tight text-charcoal sm:inline sm:text-xl">
+            <span className="relative flex h-10 w-10 shrink-0 overflow-hidden transition-transform duration-300 group-hover:scale-[1.05] sm:h-12 sm:w-12">
+              <Image
+                src={SITE.logo}
+                alt=""
+                width={64}
+                height={64}
+                priority
+                aria-hidden
+                className="h-full w-full object-contain object-top"
+              />
+            </span>
+            <span className="truncate font-display text-sm tracking-tight text-charcoal sm:text-xl">
               Sunset Tea
             </span>
           </Link>
