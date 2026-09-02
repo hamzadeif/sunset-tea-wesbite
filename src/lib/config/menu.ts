@@ -68,6 +68,13 @@ export const POPULAR_COMBOS: PopularCombo[] = [
   },
 ];
 
+/** Drink IDs from the three most popular combos (for badges in the planner). */
+export const POPULAR_DRINK_IDS = new Set(POPULAR_COMBOS.map((c) => c.drinkId));
+
+export function isPopularDrink(drinkId: string): boolean {
+  return POPULAR_DRINK_IDS.has(drinkId);
+}
+
 export function getDrinkById(id: string): MenuDrink | undefined {
   return MENU_DRINKS.find((d) => d.id === id);
 }

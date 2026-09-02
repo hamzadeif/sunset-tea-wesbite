@@ -2,15 +2,16 @@
 
 import {
   getCategoryName,
+  isPopularDrink,
   MENU_CATEGORIES,
   MENU_DRINKS,
+  POPULAR_COMBOS,
   TOPPINGS,
   type ToppingId,
 } from "@/lib/config/menu";
 import { RECOMMENDATION_MAX_CUPS } from "@/lib/config/business";
 import { buildRecommendedMix, selectedDrinkTotal } from "@/lib/inquiry/recommendations";
 import type { InquiryFormState } from "@/lib/inquiry/types";
-import { POPULAR_COMBOS } from "@/lib/config/menu";
 
 interface DrinkSelectorProps {
   state: InquiryFormState;
@@ -122,17 +123,25 @@ export function DrinkSelector({ state, onChange, error }: DrinkSelectorProps) {
                     {drinks.map((drink) => {
                       const qty = getQty(drink.id);
                       const topping = getTopping(drink.id);
+                      const popular = isPopularDrink(drink.id);
                       return (
                         <div
                           key={drink.id}
-                          className={`rounded-[1.25rem] border bg-white/85 p-4 transition-colors sm:p-5 ${
-                            qty > 0 ? "border-orange-accent/40" : "border-border"
+                          className={`rounded-[1.25rem] border p-4 transition-colors sm:p-5 ${
+                            qty > 0
+                              ? "border-orange-accent/40 bg-white/85"
+                              : popular
+                                ? "border-orange-accent/25 bg-peach-50/60"
+                                : "border-border bg-white/85"
                           }`}
                         >
                           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                             <div>
-                              <p className="font-semibold text-charcoal">{drink.name}</p>
-                              <p className="text-xs font-medium uppercase tracking-wider text-muted-soft">
+                              <div className="flex flex-wrap items-center gap-2">
+                                <p className="font-semibold text-charcoal">{drink.name}</p>
+                                {popular ? <PopularBadge /> : null}
+                              </div>
+                              <p className="mt-0.5 text-xs font-medium uppercase tracking-wider text-muted-soft">
                                 {getCategoryName(drink.category)}
                               </p>
                             </div>
@@ -207,6 +216,14 @@ export function DrinkSelector({ state, onChange, error }: DrinkSelectorProps) {
 
       {error ? <p className="error-text">{error}</p> : null}
     </div>
+  );
+}
+
+function PopularBadge() {
+  return (
+    <span className="inline-flex items-center rounded-full bg-orange-accent px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-[0.08em] text-white">
+      Popular
+    </span>
   );
 }
 
@@ -316,6 +333,7 @@ export function BoothMenuSelector({
                 <div className="grid gap-3 sm:grid-cols-2">
                   {drinks.map((drink) => {
                     const selected = state.boothDrinkIds.includes(drink.id);
+                    const popular = isPopularDrink(drink.id);
                     return (
                       <button
                         key={drink.id}
@@ -324,13 +342,18 @@ export function BoothMenuSelector({
                         className={`rounded-[1.25rem] border p-4 text-left transition-all ${
                           selected
                             ? "border-orange-accent bg-peach-50"
-                            : "border-border bg-white/85 hover:border-orange-accent/30"
+                            : popular
+                              ? "border-orange-accent/25 bg-peach-50/60 hover:border-orange-accent/40"
+                              : "border-border bg-white/85 hover:border-orange-accent/30"
                         }`}
                       >
                         <div className="flex items-start justify-between gap-2">
                           <div>
-                            <p className="font-semibold text-charcoal">{drink.name}</p>
-                            <p className="text-xs uppercase tracking-wider text-muted-soft">
+                            <div className="flex flex-wrap items-center gap-2">
+                              <p className="font-semibold text-charcoal">{drink.name}</p>
+                              {popular ? <PopularBadge /> : null}
+                            </div>
+                            <p className="mt-0.5 text-xs uppercase tracking-wider text-muted-soft">
                               {getCategoryName(drink.category)}
                             </p>
                           </div>
